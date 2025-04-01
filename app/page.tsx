@@ -29,17 +29,18 @@ export default function Home() {
                       />
         </p>
       </section>
-
-      {/* Skills Section */}
-      
+      {/* Skills Section */}      
       <section id="skills" className="min-h-screen py-20">
         <h2 className="text-3xl font-semibold text-center mb-10">My Skills</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 px-8">
           {/* We'll iterate over skills images here */}
           {skills.map((skill, i) => (
                 <div key={i} className="p-4 border rounded-lg text-center bg-gray-100 dark:bg-gray-800">
-                  <img src={skill.icon} alt={skill.name} className="w-20 h-20 mx-auto mb-4" />
-                  <p>{skill.name}</p>
+                  <Image 
+                        src={skill.icon} 
+                        alt={skill.name} className="w-20 h-20 mx-auto mb-4" 
+                      />
+                        <p>{skill.name}</p>
                 </div>
               ))}
         </div>
@@ -49,7 +50,7 @@ export default function Home() {
       <section id="projects" className="min-h-screen py-20 text-center">
           <h2 className="text-4xl font-bold mb-10">Projects</h2>
           <p className="max-w-3xl mx-auto mb-10">
-            Here are a few of the projects I enjoyed creating. I'm still improving and adding new features whenever new ideas pop up!
+            Here are a few of the projects I enjoyed creating. I&apos;m still improving and adding new features whenever new ideas pop up!
             For the full list of all my projects and my Open Source contributions, please check out my<a 
                 href="https://github.com/bhekidaweti" 
                 target="_blank" 
@@ -63,7 +64,7 @@ export default function Home() {
               <div key={index} className="border border-gray-200 rounded-lg shadow-lg p-6 bg-white hover:shadow-xl transition-shadow">
                 <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
                 <p className="text-sm text-gray-600 mb-4">{project.summary}</p>
-                <img 
+                <Image 
                     src={project.image} 
                     alt={project.title} 
                     className="w-full h-40 object-cover cursor-pointer rounded mb-4 hover:opacity-80 transition-opacity"
@@ -91,7 +92,9 @@ export default function Home() {
               onClick={() => setSelectedImage(null)}
             >
               <div className="relative">
-                <img src={selectedImage} alt="Enlarged Project" className="rounded-lg max-w-full max-h-screen" />
+                <Image 
+                src={selectedImage} alt="Enlarged Project" className="rounded-lg max-w-full max-h-screen"
+                 />
                 <button 
                   className="absolute top-2 right-2 text-white text-2xl"
                   onClick={() => setSelectedImage(null)}
@@ -108,7 +111,7 @@ export default function Home() {
           <section id="articles" className="min-h-screen py-20 text-center">
           <h2 className="text-4xl font-bold mb-10">Articles</h2>
           <p className="max-w-3xl mx-auto mb-10">
-            Here are some of the articles I've written and published for OpenGenus:
+            Here are some of the articles I&apos;ve written and published for OpenGenus:
           </p>
           
           <div className="space-y-4">
@@ -148,7 +151,7 @@ export default function Home() {
 
       {/* Contact Section */}
       <section id="contact" className="min-h-screen py-20 text-center">
-        <h2 className="text-3xl font-semibold mb-10">Let's Connect</h2>
+        <h2 className="text-3xl font-semibold mb-10">Let&apos;s Connect</h2>
         <form
           name="contact"
           method="POST"

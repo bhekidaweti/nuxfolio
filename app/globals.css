@@ -27,6 +27,3 @@
     padding: 20px;
   }                                         
 }
-.min-h-screen {
-  min-height: calc(100vh - 20px);
-}

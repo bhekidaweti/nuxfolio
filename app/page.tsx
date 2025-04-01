@@ -14,7 +14,7 @@ export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    
+
     const formData = new FormData(event.target as HTMLFormElement);
 
     await fetch("/__forms.html", {
@@ -184,7 +184,7 @@ export default function Home() {
 
       </section>
 
-      <footer className="fixed bottom-0 left-0 right-0 text-center py-4 text-sm text-gray-500 bg-white dark:bg-black transition-colors duration-300">
+      <footer className="fixed bottom-0 left-0 right-0 text-center py-4 text-sm text-gray-500 bg-white dark:bg-black transition-colors duration-300 z-50">
           <div className="flex justify-center items-center gap-2">
             &copy; {new Date().getFullYear()} Bheki Daweti. All rights reserved.
             <a 

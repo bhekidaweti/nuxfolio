@@ -12,6 +12,22 @@ import bannerImage from '../public/meme-banner.jpg';
 
 export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const handleFormSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    
+    const formData = new FormData(event.target as HTMLFormElement);
+
+    await fetch("/__forms.html", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
+    });
+    
+
+    // Add success/error handling here
+    alert('Form submitted successfully!');
+  };
+
   return (
     <div className="min-h-screen font-sans text-gray-800 dark:text-gray-200 bg-white dark:bg-black transition-colors duration-300">
       <Header />
@@ -156,6 +172,7 @@ export default function Home() {
           name="contact"
           method="POST"
           data-netlify="true"
+          onSubmit={handleFormSubmit}  
           className="max-w-lg mx-auto flex flex-col gap-4"
         >
           <input type="hidden" name="form-name" value="contact" />

@@ -24,7 +24,7 @@ export default function Home() {
     });
     
 
-    // Add success/error handling here
+    // success/error handling
     alert('Form submitted successfully!');
   };
 
@@ -34,16 +34,20 @@ export default function Home() {
 
       {/* Hero Section */}
       <section id="home" className="pt-28 min-h-screen text-center">
-        <h1 className="text-5xl font-bold mb-4">Hi, I am Bheki Daweti👋 </h1>
-        <p className="text-lg">
-        This is my personal portfolio website where I showcase my work and share my thoughts on technology, programming, and more.
-              <Image
-                        src={bannerImage}
-                        alt="meme-banner"
-                        width={1000}
-                        height={300}
-                      />
+        <h1 className="text-5xl font-bold mb-4">Hi, I am Bheki Daweti👋, a full stack developer ..</h1>
+        <p className="text-lg mb-6">
+            This is my personal portfolio website, please have your nose...
         </p>
+          <div className="flex justify-center">
+            <Image
+              src={bannerImage}
+              alt="meme-banner"
+              className="rounded-lg w-full max-w-5xl h-auto"
+              width={1000}
+              height={300}
+              priority
+            />
+          </div>
       </section>
       {/* Skills Section */}      
       <section id="skills" className="min-h-screen py-20">
@@ -55,6 +59,9 @@ export default function Home() {
                   <Image 
                         src={skill.icon} 
                         alt={skill.name} className="w-20 h-20 mx-auto mb-4" 
+                        width={1000}
+                        height={300}
+                        priority
                       />
                         <p>{skill.name}</p>
                 </div>
@@ -84,6 +91,9 @@ export default function Home() {
                     src={project.image} 
                     alt={project.title} 
                     className="w-full h-40 object-cover cursor-pointer rounded mb-4 hover:opacity-80 transition-opacity"
+                    width={1000}
+                    height={300}
+                    priority
                     onClick={() => setSelectedImage(project.image)}
                   />
                 <div className="space-y-2">
@@ -110,6 +120,9 @@ export default function Home() {
               <div className="relative">
                 <Image 
                 src={selectedImage} alt="Enlarged Project" className="rounded-lg max-w-full max-h-screen"
+                width={1000}
+                height={300}
+                priority
                  />
                 <button 
                   className="absolute top-2 right-2 text-white text-2xl"

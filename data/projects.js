@@ -6,8 +6,7 @@ const projects = [
     imageAlt: "Flag Quiz App",
     links: [
       { text: "Source code for the Django version", url: "https://github.com/bhekidaweti/capstone" },
-      { text: "Source code for the React version", url: "https://github.com/bhekidaweti/flag-quiz-json" },
-      { text: "Live Demo", url: "https://funwithworldflags.co.za" }
+      { text: "Source code for the React version", url: "https://github.com/bhekidaweti/flag-quiz-json" }
     ]
   },
   {

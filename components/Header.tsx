@@ -2,7 +2,7 @@
 import { Link } from 'react-scroll';
 import ThemeToggle from './ThemeToggle';
 import Image from 'next/image';
-import logo from '../public/daweti-logo.png';
+import logo from '../public/bheki-logo.png';
 
 const navLinks = [
   { label: 'Home', to: 'home' },
@@ -20,8 +20,8 @@ export default function Header() {
         <Image
                 src={logo}
                 alt="Bheki Daweti"
-                width={80}
-                height={50}
+                width={150}
+                height={80}
               />
         </div>
       <nav className="flex gap-6 items-center">

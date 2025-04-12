@@ -2,7 +2,7 @@ import './globals.css';
 import { ThemeProvider } from 'next-themes';
 
 export const metadata = {
-  title: 'Bheki Daweti - Web Developer',
+  title: 'Bheki Daweti - Full Stack Developer',
   description: 'Full Stack Developer Engineer',
 };
 

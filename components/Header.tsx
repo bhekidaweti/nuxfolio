@@ -1,6 +1,6 @@
 'use client';
 import { Link } from 'react-scroll';
-import ThemeToggle from './ThemeToggle';
+//import ThemeToggle from './ThemeToggle';
 import Image from 'next/image';
 import logo from '../public/bheki-logo.png';
 
@@ -38,7 +38,7 @@ export default function Header() {
             {link.label}
           </Link>
         ))}
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
       </nav>
     </header>
   );

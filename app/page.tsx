@@ -12,21 +12,33 @@ import bannerImage from '../public/meme-banner.jpg';
 
 export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const handleFormSubmit = async (event: React.FormEvent) => {
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const formData = new FormData(event.target as HTMLFormElement);
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
 
-    await fetch("/__forms.html", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
-    });
-    
+    try {
+      const response = await fetch("https://formsubmit.co/bheki.daweti@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams(formData as any).toString(),
+      });
 
-    // success/error handling
-    alert('Form submitted successfully!');
+      if (response.ok) {
+        alert("Form submitted successfully!");
+        form.reset(); // clear form
+      } else {
+        alert("There was a problem submitting the form.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred. Please try again later.");
+    }
   };
+
 
   return (
     <div className="min-h-screen font-sans text-gray-800 dark:text-gray-200 bg-white dark:bg-black transition-colors duration-300">
@@ -51,7 +63,7 @@ export default function Home() {
       </section>
       {/* Skills Section */}      
       <section id="skills" className="min-h-screen py-20">
-        <h2 className="text-3xl font-semibold text-center mb-10">My Skills</h2>
+        <h2 className="text-3xl font-semibold text-center mb-10">Tech Skills</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {/* We'll iterate over skills images here */}
           {skills.map((skill, i) => (
@@ -181,20 +193,19 @@ export default function Home() {
       {/* Contact Section */}
       <section id="contact" className="min-h-screen py-20 text-center">
         <h2 className="text-3xl font-semibold mb-10">Let&apos;s Connect</h2>
-        <form
-          name="contact"
-          method="POST"
-          data-netlify="true"
-          onSubmit={handleFormSubmit}  
-          className="max-w-lg mx-auto flex flex-col gap-4"
-        >
-          <input type="hidden" name="form-name" value="contact" />
+        <p className="max-w-3xl mx-auto mb-10">
+          I am always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+        </p>
+        <form onSubmit={handleFormSubmit} className="max-w-lg mx-auto flex flex-col gap-4">
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_subject" value="New contact form message" />
+
           <input name="name" placeholder="Your Name" className="p-2 border dark:bg-gray-900" required />
           <input type="email" name="email" placeholder="Your Email" className="p-2 border dark:bg-gray-900" required />
           <textarea name="message" placeholder="Your Message" className="p-2 border dark:bg-gray-900" required />
-          <button className="bg-green-600 hover:bg-green-700 text-white p-2 rounded">Send Message</button>
-        </form>
 
+          <button type="submit" className="bg-green-600 hover:bg-green-700 text-white p-2 rounded">Send Message</button>
+        </form>
       </section>
 
       <footer className="text-center py-4 text-sm text-gray-500 bg-white dark:bg-black transition-colors duration-300"> 

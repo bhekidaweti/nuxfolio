@@ -1,22 +1,17 @@
 'use client';
 
-import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
+import useDarkMode from '../hooks/useDarkMode';
 
 export default function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted) return <button className="p-2 rounded-full border">🌙</button>;
+  const { isDark, toggleDark } = useDarkMode();
 
   return (
     <button
-      className="p-2 rounded-full border hover:bg-gray-200 dark:hover:bg-gray-700"
-      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      onClick={toggleDark}
+      className="p-2 rounded border border-gray-400 dark:border-gray-200"
     >
-      {theme === 'dark' ? '🌞 Light Mode' : '🌙 Dark Mode'}
+      {isDark ? '☀' : '🌙'}
     </button>
   );
 }
+

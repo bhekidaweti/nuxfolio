@@ -19,7 +19,7 @@ export default function Home() {
     const formData = new FormData(form);
 
     try {
-      const response = await fetch("https://formsubmit.co/bheki.daweti@gmail.com", {
+      const response = await fetch("https://formsubmit.co/c2c4ebf243e50e31d804807d0e6c9237", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

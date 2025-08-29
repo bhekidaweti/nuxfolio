@@ -46,6 +46,16 @@ const projects = [
       { text: "Source Code", url: "https://github.com/bhekidaweti/wmr" },
       { text: "Live Demo", url: "https://w-frontend-h0rz.onrender.com/" }
     ]
+  },
+    {
+    title: "E-commerce Website",
+    summary: "Full stack e-commerce web application built with NextJS, with google authentication, FastPay payment integration, and Posgres database.",
+    image: "/project-samples/ecom-web.png",
+    imageAlt: "ecom website",
+    links: [
+      
+      { text: "Live Demo", url: "https://shop.bheki.co.za/" }
+    ]
   }
 ];
 

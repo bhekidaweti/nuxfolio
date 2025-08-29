@@ -2,7 +2,7 @@
 import { Link } from 'react-scroll';
 import ThemeToggle from '../components/ThemeToggle';
 import Image from 'next/image';
-import logo from '../public/bheki-logo.png';
+import logo from '../public/dee.png';
 
 const navLinks = [
   { label: 'Home', to: 'home' },

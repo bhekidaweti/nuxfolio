@@ -2,10 +2,10 @@ const projects = [
   {
     title: "FlagQuiz App",
     summary: "Flag quiz app that users can play by matching a country name with a country flag",
-    image: "/project-samples/flag-quiz-json-frontend-footer.png",
+    image: "/project-samples/flag-quiz-next.png",
     imageAlt: "Flag Quiz App",
     links: [
-      { text: "Source code for the Django version", url: "https://quiz.bheki.co.za" },
+      { text: "Live demo", url: "https://quiz.bheki.co.za" },
     ]
   },
   {

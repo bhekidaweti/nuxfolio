@@ -41,7 +41,7 @@ export default function Home() {
 
 
   return (
-    <div className="min-h-screen font-sans text-gray-800 dark:text-gray-200 bg-white dark:bg-black transition-colors duration-300">
+    <div className="min-h-screen font-sans text-gray-800 dark:text-white-200 transition-colors duration-300">
       <Header />
 
       {/* Hero Section */}
@@ -67,7 +67,7 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {/* We'll iterate over skills images here */}
           {skills.map((skill, i) => (
-                <div key={i} className="p-4 border rounded-lg text-center bg-gray-100 dark:bg-gray-800">
+                <div key={i} className="p-4 border rounded-lg text-cente">
                   <Image 
                         src={skill.icon} 
                         alt={skill.name} className="w-20 h-20 mx-auto mb-4" 
@@ -176,7 +176,7 @@ export default function Home() {
           
           <div className="space-y-4">
             {videos.map((video, index) => (
-              <div key={index} className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow">
+              <div key={index} className="p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                 <a
                   href={video.link}
                   target="_blank"
@@ -208,7 +208,7 @@ export default function Home() {
         </form>
       </section>
 
-      <footer className="text-center py-4 text-sm text-gray-500 bg-white dark:bg-black transition-colors duration-300"> 
+      <footer className="text-center py-4 text-sm text-gray-500 transition-colors duration-300"> 
         <div className="flex justify-center items-center gap-2">
           &copy; {new Date().getFullYear()} Bheki Daweti. All rights reserved.
           <a 

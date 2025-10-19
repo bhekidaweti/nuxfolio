@@ -12,13 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <header className="p-4">
-        <script>
-            var ahrefs_analytics_script = document.createElement('script');
-            ahrefs_analytics_script.async = true;
-            ahrefs_analytics_script.src = 'https://analytics.ahrefs.com/analytics.js';
-            ahrefs_analytics_script.setAttribute('data-key', 'rEtNPSLM5V9wHS4uzOLDRw');
-            document.getElementsByTagName('head')[0].appendChild(ahrefs_analytics_script);
-          </script>
+        <script src="https://analytics.ahrefs.com/analytics.js" data-key="rEtNPSLM5V9wHS4uzOLDRw" async></script>
           {/* Google Analytics (GA4) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-K1BSS4M7ZV"

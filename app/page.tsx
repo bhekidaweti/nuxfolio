@@ -12,6 +12,8 @@ import bannerImage from '../public/meme-banner.jpg';
 
 export default function Home() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  //const [showOverlay, setShowOverlay] = useState(true);
+
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -41,9 +43,8 @@ export default function Home() {
 
 
   return (
-    <div className="min-h-screen font-sans text-gray-800 dark:text-gray-200 bg-white dark:bg-black transition-colors duration-300">
+    <div className="min-h-screen font-sans text-white-800">
       <Header />
-
       {/* Hero Section */}
       <section id="home" className="pt-28 min-h-screen text-center">
         <h1 className="text-5xl font-bold mb-4">Hi, I am Bheki Daweti👋, a full stack developer ..</h1>
@@ -67,7 +68,7 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {/* We'll iterate over skills images here */}
           {skills.map((skill, i) => (
-                <div key={i} className="p-4 border rounded-lg text-center bg-gray-100 dark:bg-gray-800">
+                <div key={i} className="p-4 border rounded-lg text-center">
                   <Image 
                         src={skill.icon} 
                         alt={skill.name} className="w-20 h-20 mx-auto mb-4" 
@@ -83,9 +84,9 @@ export default function Home() {
 
       {/* Projects Section */}
       <section id="projects" className="min-h-screen py-20 text-center">
-          <h2 className="text-4xl font-bold mb-10">Projects</h2>
+          <h2 className="text-4xl font-bold mb-10">Projects and Clients</h2>
           <p className="max-w-3xl mx-auto mb-10">
-            Here are a few of the projects I enjoyed creating. I&apos;m still improving and adding new features whenever new ideas pop up!
+            I&apos;m still improving and adding new features whenever new ideas pop up!
             For the full list of all my projects and my Open Source contributions, please check out my<a 
                 href="https://github.com/bhekidaweti" 
                 target="_blank" 
@@ -96,7 +97,7 @@ export default function Home() {
 
           <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3 mx-auto max-w-7xl">
             {projects.map((project, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg shadow-lg p-6 bg-white hover:shadow-xl transition-shadow">
+              <div key={index} className="border border-gray-200 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
                 <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
                 <p className="text-sm text-gray-600 mb-4">{project.summary}</p>
                 <Image 
@@ -152,12 +153,12 @@ export default function Home() {
           <section id="articles" className="min-h-screen py-20 text-center">
           <h2 className="text-4xl font-bold mb-10">Articles</h2>
           <p className="max-w-3xl mx-auto mb-10">
-            Here are some of the articles I&apos;ve written and published for OpenGenus:
+           Some of the articles I have written and published for OpenGenus:
           </p>
           
           <div className="space-y-4">
             {articles.map((article, index) => (
-              <div key={index} className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow">
+              <div key={index} className="p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                 <a
                   href={article.link}
                   target="_blank"
@@ -176,7 +177,7 @@ export default function Home() {
           
           <div className="space-y-4">
             {videos.map((video, index) => (
-              <div key={index} className="p-4 border border-gray-200 rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow">
+              <div key={index} className="p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                 <a
                   href={video.link}
                   target="_blank"
@@ -207,8 +208,33 @@ export default function Home() {
           <button type="submit" className="bg-green-600 hover:bg-green-700 text-white p-2 rounded">Send Message</button>
         </form>
       </section>
+{/*      {showOverlay && (
+        <div 
+          className="fixed inset-0 bg-black/80 z-[9999] flex items-center justify-center">
+            <div className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-xl text-center max-w-md mx-auto">
+              <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Welcome</h2>
+              <p className="mb-6 text-gray-800 dark:text-gray-300">Please choose where you want to go first:</p>
+              <div className="flex flex-col gap-4">
+                <button
+                  onClick={() => setShowOverlay(false)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded"
+                >
+                  Continue to main page_
+                </button>
 
-      <footer className="text-center py-4 text-sm text-gray-500 bg-white dark:bg-black transition-colors duration-300"> 
+                <a href="/projects"
+                className="px-4 py-2 rounded bg-green-600 hover:bg-green-700 text-white block"
+                >
+                  View projects directly_
+                </a>
+              </div>
+            </div>
+          </div>
+        )
+      }*/}
+ 
+
+      <footer className="text-center py-4 text-sm text-gray-500 transition-colors duration-300"> 
         <div className="flex justify-center items-center gap-2">
           &copy; {new Date().getFullYear()} Bheki Daweti. All rights reserved.
           <a 
@@ -229,7 +255,7 @@ export default function Home() {
             </svg>
           </a>
         </div>
-</footer>
+      </footer>
 
 
     </div>

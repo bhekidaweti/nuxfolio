@@ -1,8 +1,8 @@
 'use client';
 import { Link } from 'react-scroll';
-import ThemeToggle from '../components/ThemeToggle';
 import Image from 'next/image';
-import logo from '../public/bheki-logo.png';
+import logo from '../public/dee.png';
+import ThemeToggle from './ThemeToggle';
 
 const navLinks = [
   { label: 'Home', to: 'home' },
@@ -15,7 +15,7 @@ const navLinks = [
 
 export default function Header() {
   return (
-    <header className="w-full fixed top-0 left-0 z-50 bg-white dark:bg-black shadow flex justify-between items-center px-6 py-4">
+    <header className="w-full fixed top-0 left-0 z-50 bg-black flex justify-between items-center px-6 py-4">
       <div className="font-bold text-xl">
         <Image
                 src={logo}
@@ -38,7 +38,7 @@ export default function Header() {
             {link.label}
           </Link>
         ))}
-         <ThemeToggle /> 
+        <ThemeToggle />
       </nav>
     </header>
   );

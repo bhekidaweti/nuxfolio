@@ -1,12 +1,14 @@
 import { supabaseServer } from "@/lib/supabaseServer";
 
 // ✅ Get single post by id
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(_req: Request, { params }: { params: { id: string } }) {
   try {
+
+    const {id} = params;
     const { data, error } = await supabaseServer
       .from("posts")
       .select("*")
-      .eq("id", params.id)
+      .eq("id", id)
       .maybeSingle();
 
     if (error) return new Response(JSON.stringify({ error: error.message }), { status: 400 });
@@ -20,12 +22,12 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 // ✅ Update a post
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
   try {
-    const { title, slug, excerpt, content } = await req.json();
-
+    const {id} = params;
+    const { title, slug, excerpt, content } = await req.json();    
     const { data, error } = await supabaseServer
       .from("posts")
       .update({ title, slug: slug.trim().toLowerCase(), excerpt, content })
-      .eq("id", params.id);
+      .eq("id", id);
 
     if (error) return new Response(JSON.stringify({ error: error.message }), { status: 400 });
 
@@ -36,12 +38,13 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 }
 
 // ✅ Delete a post
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(_req: Request, { params }: { params: { id: string } }) {
   try {
+    const {id} = params;
     const { data, error } = await supabaseServer
       .from("posts")
       .delete()
-      .eq("id", params.id);
+      .eq("id", id);
 
     if (error) return new Response(JSON.stringify({ error: error.message }), { status: 400 });
 

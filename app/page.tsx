@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Header from '../components/Header';
 import skills from '../data/skills.js';
 import projects from '../data/projects.js';
 import articles from '../data/articles.js';
@@ -44,7 +43,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen font-sans text-white-800">
-      <Header />
       {/* Hero Section */}
       <section id="home" className="pt-28 min-h-screen text-center">
         <h1 className="text-5xl font-bold mb-4">Hi, I am Bheki Daweti👋, a full stack developer ..</h1>

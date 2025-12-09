@@ -42,7 +42,7 @@ export default function Header() {
           href="/blog"
           className="cursor-pointer hover:text-green-500 dark:hover:text-green-300"
         >
-         <SquareArrowUpRight className="inline-block mr-2 h-3 w-3"/>     
+         <SquareArrowUpRight className="inline-block mr-2 h-4 w-4"/>     
           Blog
         </Link>
         <ThemeToggle />

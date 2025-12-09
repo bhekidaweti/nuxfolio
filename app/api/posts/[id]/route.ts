@@ -17,7 +17,7 @@ export async function GET(req: Request, context: { params: { id: string } }) {
       });
 
     return new Response(JSON.stringify({ data }), { status: 200 });
-  } catch (err) {
+  } catch (error) {
     return new Response(JSON.stringify({ error: "Internal Server Error" }), {
       status: 500,
     });
@@ -48,7 +48,7 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
       });
 
     return new Response(JSON.stringify({ data }), { status: 200 });
-  } catch (err) {
+  } catch (error) {
     return new Response(JSON.stringify({ error: "Internal Server Error" }), {
       status: 500,
     });
@@ -71,7 +71,7 @@ export async function DELETE(req: Request, context: { params: { id: string } }) 
       });
 
     return new Response(JSON.stringify({ data }), { status: 200 });
-  } catch (err) {
+  } catch (error) {
     return new Response(JSON.stringify({ error: "Internal Server Error" }), {
       status: 500,
     });

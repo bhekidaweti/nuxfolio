@@ -1,9 +1,13 @@
+import { NextRequest, NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabaseServer";
 
 // GET single post
-export async function GET(_req: Request, context: { params: { id: string } }) {
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
-    const { id } = context.params;
+    const { id } = params;
 
     const { data, error } = await supabaseServer
       .from("posts")
@@ -12,23 +16,25 @@ export async function GET(_req: Request, context: { params: { id: string } }) {
       .maybeSingle();
 
     if (error)
-      return new Response(JSON.stringify({ error: error.message }), {
-        status: 400,
-      });
+      return NextResponse.json({ error: error.message }, { status: 400 });
 
-    return new Response(JSON.stringify({ data }), { status: 200 });
+    return NextResponse.json({ data }, { status: 200 });
   } catch {
-    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
-      status: 500,
-    });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
 
 // UPDATE
-export async function PUT(req: Request, context: { params: { id: string } }) {
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
-    const { id } = context.params;
     const body = await req.json();
+    const { id } = params;
 
     const { title, slug, excerpt, content } = body;
 
@@ -43,25 +49,24 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
       .eq("id", id);
 
     if (error)
-      return new Response(JSON.stringify({ error: error.message }), {
-        status: 400,
-      });
+      return NextResponse.json({ error: error.message }, { status: 400 });
 
-    return new Response(JSON.stringify({ data }), { status: 200 });
+    return NextResponse.json({ data }, { status: 200 });
   } catch {
-    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
-      status: 500,
-    });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
 
 // DELETE
 export async function DELETE(
-  _req: Request,
-  context: { params: { id: string } }
+  _req: NextRequest,
+  { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = context.params;
+    const { id } = params;
 
     const { data, error } = await supabaseServer
       .from("posts")
@@ -69,14 +74,13 @@ export async function DELETE(
       .eq("id", id);
 
     if (error)
-      return new Response(JSON.stringify({ error: error.message }), {
-        status: 400,
-      });
+      return NextResponse.json({ error: error.message }, { status: 400 });
 
-    return new Response(JSON.stringify({ data }), { status: 200 });
+    return NextResponse.json({ data }, { status: 200 });
   } catch {
-    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
-      status: 500,
-    });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

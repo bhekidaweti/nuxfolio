@@ -2,10 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabaseServer";
 
 // GET single post
-export async function GET(
-  _req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(_req: NextRequest, { params }: any) {
   try {
     const { id } = params;
 
@@ -28,10 +25,7 @@ export async function GET(
 }
 
 // UPDATE
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(req: NextRequest, { params }: any) {
   try {
     const body = await req.json();
     const { id } = params;
@@ -61,10 +55,7 @@ export async function PUT(
 }
 
 // DELETE
-export async function DELETE(
-  _req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(_req: NextRequest, { params }: any) {
   try {
     const { id } = params;
 

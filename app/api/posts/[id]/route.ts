@@ -1,7 +1,7 @@
 import { supabaseServer } from "@/lib/supabaseServer";
 
 // GET single post
-export async function GET(req: Request, context: { params: { id: string } }) {
+export async function GET(_req: Request, context: { params: { id: string } }) {
   try {
     const { id } = context.params;
 
@@ -57,7 +57,7 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
 
 // DELETE
 export async function DELETE(
-  req: Request,
+  _req: Request,
   context: { params: { id: string } }
 ) {
   try {

@@ -1,11 +1,5 @@
-// lib/supabaseClient.ts
-"use client";
-
 import { createBrowserClient } from "@supabase/ssr";
 
-/**
- * Browser client helper — call this inside client components to get a Supabase browser client.
- */
 export function supabaseBrowser() {
   return createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

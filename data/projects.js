@@ -16,7 +16,7 @@ const projects = [
     imageAlt: "Elif Tech Shop website",
     links: [
       
-      { text: "Live Demo", url: "https://eliftech.co.za/" }
+      { text: "Live", url: "https://eliftech.co.za/" }
     ]
   },
     {
@@ -26,7 +26,7 @@ const projects = [
     imageAlt: "Wiki memes website",
     links: [
       
-      { text: "Live Demo", url: "https://sawinefarms.co.za/" }
+      { text: "Live", url: "https://sawinefarms.co.za/" }
     ]
   },
     {
@@ -36,7 +36,7 @@ const projects = [
     imageAlt: "Wiki memes website",
     links: [
       
-      { text: "Live Demo", url: "https://printshopnearme.co.za/" }
+      { text: "Live", url: "https://printshopnearme.co.za/" }
     ]
   },
   {

@@ -5,19 +5,21 @@ import { SquareArrowUpLeft } from "lucide-react";
 
 export default async function Home() {
   // Fetch posts from Supabase
-  const { data, error } = await supabaseServer
+  const supabase = await supabaseServer();
+  const { data, error } = await supabase
     .from("posts")
     .select("*")
     .order("created_at", { ascending: false });
 
   const posts = data ?? [];
 
-  if (error) return <p className="text-red-500">Failed to load posts: {error.message}</p>;
+  if (error) 
+    return <p className="text-red-500">Failed to load posts: {error.message}</p>;
   if (posts.length === 0) return <p>No posts found.</p>;
 
   return (
     <main className="min-h-screen flex flex-col items-center py-10 px-4">
-        <Link href="/" className="mb-6 px-4 py-2 text-white rounded hover:bg-blue-700">
+        <Link href="/" className="mb-6 px-4 py-10 text-white rounded hover:bg-blue-700">
         <SquareArrowUpLeft className="inline-block mr-2" />
            Home page
         </Link>

@@ -64,7 +64,7 @@ export default function Home() {
       <section id="skills" className="min-h-screen py-20">
         <h2 className="text-3xl font-semibold text-center mb-10">Tech Skills</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {/* We'll iterate over skills images here */}
+          
           {skills.map((skill, i) => (
                 <div key={i} className="p-4 border rounded-lg text-center">
                   <Image 

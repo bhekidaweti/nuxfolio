@@ -1,87 +1,90 @@
-import { NextRequest, NextResponse } from "next/server";
-import type { Params } from "next/dist/server/request/params";
-import { supabaseServer } from "@/lib/supabaseServer";
+// app/api/posts/[id]/route.ts
+import { NextRequest } from "next/server";
+import { supabaseService } from "@/lib/supabaseServer";
 
-// GET single post
+interface PostBody {
+  title?: string;
+  slug?: string;
+  excerpt?: string;
+  content?: string;
+}
+
+// GET /api/posts/[id]
 export async function GET(
   _req: NextRequest,
-  context: { params: Params }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = context.params;
+    const params = await context.params;
+    const { id } = params;
 
-    const { data, error } = await supabaseServer
-      .from("posts")
-      .select("*")
-      .eq("id", id)
-      .maybeSingle();
+    const supabase = supabaseService();
+    const { data, error } = await supabase.from("posts").select("*").eq("id", id).maybeSingle();
 
-    if (error)
-      return NextResponse.json({ error: error.message }, { status: 400 });
+    if (error) {
+      console.error("[GET /api/posts/:id] supabase error:", error);
+      return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    }
+    if (!data) return new Response(JSON.stringify({ error: "Post not found" }), { status: 404 });
 
-    return NextResponse.json({ data }, { status: 200 });
-  } catch {
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
+    return new Response(JSON.stringify({ data }), { status: 200 });
+  } catch (err: any) {
+    console.error("[GET /api/posts/:id] unexpected:", err);
+    return new Response(JSON.stringify({ error: err.message || "Unknown" }), { status: 500 });
   }
 }
 
-// UPDATE
+// PUT /api/posts/[id]
 export async function PUT(
   req: NextRequest,
-  context: { params: Params }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const body = await req.json();
-    const { id } = context.params;
+    const params = await context.params;
+    const { id } = params;
 
-    const { title, slug, excerpt, content } = body;
+    const body = (await req.json()) as PostBody;
 
-    const { data, error } = await supabaseServer
-      .from("posts")
-      .update({
-        title,
-        slug: slug.trim().toLowerCase(),
-        excerpt,
-        content,
-      })
-      .eq("id", id);
+    // Normalize slug if provided
+    if (body.slug) body.slug = body.slug.trim().toLowerCase();
 
-    if (error)
-      return NextResponse.json({ error: error.message }, { status: 400 });
+    const supabase = supabaseService();
 
-    return NextResponse.json({ data }, { status: 200 });
-  } catch {
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
+    const { data, error } = await supabase.from("posts").update(body).eq("id", id);
+
+    if (error) {
+      console.error("[PUT /api/posts/:id] supabase error:", error);
+      return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    }
+
+    return new Response(JSON.stringify({ data }), { status: 200 });
+  } catch (err: any) {
+    console.error("[PUT /api/posts/:id] unexpected:", err);
+    return new Response(JSON.stringify({ error: err.message || "Unknown" }), { status: 500 });
   }
 }
 
-// DELETE
+// DELETE /api/posts/[id]
 export async function DELETE(
   _req: NextRequest,
-  context: { params: Params }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = context.params;
+    const params = await context.params;
+    const { id } = params;
 
-    const { data, error } = await supabaseServer
-      .from("posts")
-      .delete()
-      .eq("id", id);
+    const supabase = supabaseService();
 
-    if (error)
-      return NextResponse.json({ error: error.message }, { status: 400 });
+    const { data, error } = await supabase.from("posts").delete().eq("id", id);
 
-    return NextResponse.json({ data }, { status: 200 });
-  } catch {
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
+    if (error) {
+      console.error("[DELETE /api/posts/:id] supabase error:", error);
+      return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    }
+
+    return new Response(JSON.stringify({ data }), { status: 200 });
+  } catch (err: any) {
+    console.error("[DELETE /api/posts/:id] unexpected:", err);
+    return new Response(JSON.stringify({ error: err.message || "Unknown" }), { status: 500 });
   }
 }

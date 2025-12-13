@@ -2,15 +2,12 @@
 
 export const dynamic = "force-dynamic";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabaseBrowser } from "@/lib/supabaseClient";
 
 export default function LoginPage() {
   const router = useRouter();
-
-  // ✅ Create client lazily (NOT at module scope)
-  const supabase = useMemo(() => supabaseBrowser(), []);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,6 +15,9 @@ export default function LoginPage() {
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
+
+    // ✅ Supabase created ONLY at interaction time
+    const supabase = supabaseBrowser();
 
     const { error } = await supabase.auth.signInWithPassword({
       email,

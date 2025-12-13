@@ -1,5 +1,5 @@
 // app/api/posts/[id]/route.ts
-import { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { supabaseService } from "@/lib/supabaseServer";
 
 interface PostBody {
@@ -9,82 +9,125 @@ interface PostBody {
   content?: string;
 }
 
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
+
 // GET /api/posts/[id]
 export async function GET(
-  _req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  _req: Request,
+  context: RouteContext
 ) {
   try {
-    const params = await context.params;
-    const { id } = params;
+    const { id } = await context.params;
 
     const supabase = supabaseService();
-    const { data, error } = await supabase.from("posts").select("*").eq("id", id).maybeSingle();
+    const { data, error } = await supabase
+      .from("posts")
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
 
     if (error) {
       console.error("[GET /api/posts/:id] supabase error:", error);
-      return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+      return NextResponse.json(
+        { error: error.message },
+        { status: 500 }
+      );
     }
-    if (!data) return new Response(JSON.stringify({ error: "Post not found" }), { status: 404 });
 
-    return new Response(JSON.stringify({ data }), { status: 200 });
-  } catch (err: any) {
+    if (!data) {
+      return NextResponse.json(
+        { error: "Post not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ data }, { status: 200 });
+  } catch (err: unknown) {
     console.error("[GET /api/posts/:id] unexpected:", err);
-    return new Response(JSON.stringify({ error: err.message || "Unknown" }), { status: 500 });
+    return NextResponse.json(
+      { error: "Unexpected server error" },
+      { status: 500 }
+    );
   }
 }
 
 // PUT /api/posts/[id]
 export async function PUT(
-  req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  req: Request,
+  context: RouteContext
 ) {
   try {
-    const params = await context.params;
-    const { id } = params;
+    const { id } = await context.params;
+    const body: PostBody = await req.json();
 
-    const body = (await req.json()) as PostBody;
-
-    // Normalize slug if provided
-    if (body.slug) body.slug = body.slug.trim().toLowerCase();
+    const updatePayload: PostBody = {
+      ...body,
+      ...(body.slug && {
+        slug: body.slug.trim().toLowerCase(),
+      }),
+    };
 
     const supabase = supabaseService();
 
-    const { data, error } = await supabase.from("posts").update(body).eq("id", id);
+    const { data, error } = await supabase
+      .from("posts")
+      .update(updatePayload)
+      .eq("id", id)
+      .select()
+      .single();
 
     if (error) {
       console.error("[PUT /api/posts/:id] supabase error:", error);
-      return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+      return NextResponse.json(
+        { error: error.message },
+        { status: 500 }
+      );
     }
 
-    return new Response(JSON.stringify({ data }), { status: 200 });
-  } catch (err: any) {
+    return NextResponse.json({ data }, { status: 200 });
+  } catch (err: unknown) {
     console.error("[PUT /api/posts/:id] unexpected:", err);
-    return new Response(JSON.stringify({ error: err.message || "Unknown" }), { status: 500 });
+    return NextResponse.json(
+      { error: "Unexpected server error" },
+      { status: 500 }
+    );
   }
 }
 
 // DELETE /api/posts/[id]
 export async function DELETE(
-  _req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  _req: Request,
+  context: RouteContext
 ) {
   try {
-    const params = await context.params;
-    const { id } = params;
+    const { id } = await context.params;
 
     const supabase = supabaseService();
 
-    const { data, error } = await supabase.from("posts").delete().eq("id", id);
+    const { error } = await supabase
+      .from("posts")
+      .delete()
+      .eq("id", id);
 
     if (error) {
       console.error("[DELETE /api/posts/:id] supabase error:", error);
-      return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+      return NextResponse.json(
+        { error: error.message },
+        { status: 500 }
+      );
     }
 
-    return new Response(JSON.stringify({ data }), { status: 200 });
-  } catch (err: any) {
+    return NextResponse.json(
+      { success: true },
+      { status: 200 }
+    );
+  } catch (err: unknown) {
     console.error("[DELETE /api/posts/:id] unexpected:", err);
-    return new Response(JSON.stringify({ error: err.message || "Unknown" }), { status: 500 });
+    return NextResponse.json(
+      { error: "Unexpected server error" },
+      { status: 500 }
+    );
   }
 }

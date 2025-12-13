@@ -1,15 +1,16 @@
 "use client";
 
-import { useState } from "react";
+export const dynamic = "force-dynamic";
+
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { supabaseBrowser } from "@/lib/supabaseClient";
 
-export const dynamic = "force-dynamic";
-
-
 export default function LoginPage() {
-  const supabase = supabaseBrowser();
   const router = useRouter();
+
+  // ✅ Create client lazily (NOT at module scope)
+  const supabase = useMemo(() => supabaseBrowser(), []);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,19 +19,16 @@ export default function LoginPage() {
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
-
-    console.log("LOGIN RESULT:", { data, error });
 
     if (error) {
       setErrorMsg(error.message);
       return;
     }
 
-    // ⭐ IMPORTANT: refresh middleware to load new session
     router.refresh();
     router.push("/admin");
   }

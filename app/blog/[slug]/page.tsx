@@ -1,16 +1,15 @@
 import { supabaseServer } from "@/lib/supabaseServer";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
+export const dynamic = "force-dynamic";
 
 export default async function PostPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }) {
-  // ✅ REQUIRED in Next.js 15
-  const { slug } = await params;
-
-  const decodedSlug = decodeURIComponent(slug)
+  const decodedSlug = decodeURIComponent(params.slug)
     .trim()
     .toLowerCase();
 
@@ -23,7 +22,7 @@ export default async function PostPage({
     .single();
 
   if (error || !data) {
-    return <p>Post not found.</p>;
+    notFound();
   }
 
   return (

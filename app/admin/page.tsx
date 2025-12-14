@@ -1,7 +1,5 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
 import { useEffect, useState } from "react";
 import PostForm from "@/components/blog/PostForm";
 
@@ -13,26 +11,23 @@ interface Post {
   content: string;
 }
 
+export const dynamic = "force-dynamic";
+
 export default function AdminPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
 
-  // Fetch all posts
   const fetchPosts = async () => {
     const res = await fetch("/api/posts", { cache: "no-store" });
-    if (!res.ok) {
-      console.error("Failed to fetch posts");
-      return;
-    }
+    if (!res.ok) return console.error("Failed to fetch posts");
     const json = await res.json();
-    setPosts((json?.data as Post[]) ?? []);
+    setPosts(json?.data ?? []);
   };
 
   useEffect(() => {
     fetchPosts();
   }, []);
 
-  // Delete post
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this post?")) return;
     const res = await fetch(`/api/posts/${id}`, { method: "DELETE" });
@@ -43,16 +38,14 @@ export default function AdminPage() {
     }
   };
 
-  // Edit post
   const handleEdit = (post: Post) => setEditingPost(post);
 
   return (
     <main className="min-h-screen flex flex-col items-center px-4 py-10">
       <h1 className="text-3xl font-bold mb-6">Admin Panel</h1>
 
-      {/* Post Form */}
       <PostForm
-        key={editingPost?.id ?? "new"} // reset form when switching
+        key={editingPost?.id ?? "new"}
         post={editingPost ?? undefined}
         onSuccess={() => {
           fetchPosts();
@@ -60,7 +53,6 @@ export default function AdminPage() {
         }}
       />
 
-      {/* List of posts */}
       <div className="mt-10 w-full max-w-4xl">
         <h2 className="text-2xl font-bold mb-4">Existing Posts</h2>
         <ul className="space-y-4">
@@ -77,14 +69,12 @@ export default function AdminPage() {
                 >
                   Edit
                 </button>
-                <span>
                 <button
                   onClick={() => handleDelete(post.id)}
                   className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                 >
                   Delete
                 </button>
-                </span>
               </div>
             </li>
           ))}

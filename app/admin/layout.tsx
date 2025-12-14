@@ -1,26 +1,24 @@
-export const dynamic = "force-dynamic";
+// app/admin/layout.tsx
 import { supabaseServer } from "@/lib/supabaseServer";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
-import LogoutButton from "./logout-button"; 
+
+export const dynamic = "force-dynamic"; // ⚡ Force server-side rendering
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
-  const supabase = await supabaseServer();
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  const supabase = supabaseServer();
+  const { data: { session } } = await supabase.auth.getSession();
 
-  // not logged in
-  if (!session?.user?.email) {
-    redirect("/login");
-  }
+  // Not logged in
+  if (!session?.user?.email) redirect("/login");
 
   const adminEmail = (process.env.ADMIN_EMAIL || "").trim().toLowerCase();
   const userEmail = (session.user.email || "").trim().toLowerCase();
 
-  if (adminEmail && userEmail !== adminEmail) {
-    redirect("/");
-  }
+  if (adminEmail && userEmail !== adminEmail) redirect("/");
+
+  // Lazy import of client component inside layout
+  const LogoutButton = (await import("./logout-button")).default;
 
   return (
     <div className="min-h-screen p-6">

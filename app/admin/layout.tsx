@@ -1,8 +1,8 @@
-// app/admin/layout.tsx
+export const dynamic = "force-dynamic";
 import { supabaseServer } from "@/lib/supabaseServer";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
-import LogoutButton from "./logout-button"; // client component
+import LogoutButton from "./logout-button"; 
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const supabase = await supabaseServer();

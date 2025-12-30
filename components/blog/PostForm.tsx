@@ -20,32 +20,40 @@ export default function PostForm({ post, onSuccess }: PostFormProps) {
   const [content, setContent] = useState(post?.content || "");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setLoading(true);
 
-    const method = post ? "PUT" : "POST";
-    const url = post ? `/api/posts/${post.id}` : "/api/posts";
+  const formData = new FormData(e.currentTarget);
 
-    const res = await fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, slug, excerpt, content }),
-    });
+  formData.set("title", title);
+  formData.set("slug", slug);
+  formData.set("excerpt", excerpt);
+  formData.set("content", content);
 
-    if (!res.ok) {
-      alert("Failed to save post");
-      setLoading(false);
-      return;
-    }
+  const method = post ? "PUT" : "POST";
+  const url = post ? `/api/posts/${post.id}` : "/api/posts";
 
-    setTitle("");
-    setSlug("");
-    setExcerpt("");
-    setContent("");
+  const res = await fetch(url, {
+    method,
+    body: formData, // ✅ NO headers
+  });
+
+  if (!res.ok) {
+    alert("Failed to save post");
     setLoading(false);
-    if (onSuccess) onSuccess();
-  };
+    return;
+  }
+
+  setTitle("");
+  setSlug("");
+  setExcerpt("");
+  setContent("");
+  setLoading(false);
+
+  onSuccess?.();
+};
+
 
   // Auto-generate slug from title
   useEffect(() => {
@@ -55,6 +63,13 @@ export default function PostForm({ post, onSuccess }: PostFormProps) {
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-2xl space-y-4 border p-6 rounded-md">
       <h2 className="text-xl font-bold">{post ? "Edit Post" : "Create New Post"}</h2>
+	  
+	     <input
+			type="file"
+			accept="/image/*"
+			name="image"
+			className="mb-4"
+		/>
 
       <input
         type="text"

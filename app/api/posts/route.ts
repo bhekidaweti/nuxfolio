@@ -11,24 +11,17 @@ interface PostBody {
 
 export async function GET() {
   try {
-    const supabase = supabaseService();
-
-    const { data, error } = await supabase
+    const { data, error } = await supabaseService()
       .from("posts")
       .select("*")
       .order("created_at", { ascending: false });
 
     if (error) {
-      console.error("[GET /api/posts] supabase error:", error);
-      return NextResponse.json(
-        { error: error.message },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json({ data }, { status: 200 });
-  } catch (err: unknown) {
-    console.error("[GET /api/posts] unexpected:", err);
+  } catch {
     return NextResponse.json(
       { error: "Unexpected server error" },
       { status: 500 }
@@ -47,35 +40,29 @@ export async function POST(req: Request) {
       );
     }
 
-    const slug =
-      (body.slug ?? body.title)
-        .trim()
-        .toLowerCase();
+    const slug = (body.slug ?? body.title)
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, "-");
 
-    const supabase = supabaseService();
-
-    const { data, error } = await supabase
+    const { data, error } = await supabaseService()
       .from("posts")
       .insert({
         title: body.title,
         slug,
-        excerpt: body.excerpt,
+        excerpt: body.excerpt ?? "",
         content: body.content,
+        image_url: null, // ✅ explicit & safe
       })
       .select()
       .single();
 
     if (error) {
-      console.error("[POST /api/posts] supabase error:", error);
-      return NextResponse.json(
-        { error: error.message },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json({ data }, { status: 201 });
-  } catch (err: unknown) {
-    console.error("[POST /api/posts] unexpected:", err);
+  } catch {
     return NextResponse.json(
       { error: "Unexpected server error" },
       { status: 500 }

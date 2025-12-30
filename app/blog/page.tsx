@@ -44,6 +44,14 @@ export default async function Home() {
               </CardHeader>
               <CardContent>
                 <p>{excerpt}...</p>
+				{post.image_url && (
+				  <img
+					src={post.image_url}
+					alt={post.title}
+					className="w-full h-48 object-cover rounded-md mb-4"
+				  />
+				)}
+
                 <Link
                   href={`/blog/${encodeURIComponent(
                     post.slug.trim().toLowerCase()

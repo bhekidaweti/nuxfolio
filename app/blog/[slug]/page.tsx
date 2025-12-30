@@ -1,6 +1,7 @@
 import { supabaseServer } from "@/lib/supabaseServer";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { marked } from "marked";
 
 export const dynamic = "force-dynamic";
 
@@ -25,11 +26,22 @@ export default async function PostPage({
     notFound();
   }
 
+  const html = marked.parse(data.content);
+
   return (
     <main className="min-h-screen flex flex-col items-center py-20 px-4">
       <Link href="/blog" className="text-blue-600 underline mb-4">
         ← Back to posts
       </Link>
+	  
+	{data.image_url && (
+		<img
+			src={data.image_url}
+			alt={data.title}
+			className="mb-8 rounded-lg max-h-[420px] object-cover"
+		/>
+	)}
+
 
       <h1 className="text-3xl font-bold mb-4">{data.title}</h1>
 
@@ -37,9 +49,10 @@ export default async function PostPage({
         {data.excerpt || data.content.split(" ").slice(0, 30).join(" ")}...
       </p>
 
-      <article className="prose max-w-none whitespace-pre-wrap">
-        {data.content}
-      </article>
+      <article
+        className="prose prose-lg max-w-none"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     </main>
   );
 }
